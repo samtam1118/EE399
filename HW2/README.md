@@ -58,26 +58,26 @@ C_10 = np.dot(X_10.T, X_10)  # Compute the dot product of X_10 with its transpos
 ### Part D
 Computing Matrix Y and Eigenvectors: The matrix Y = X * X^T was computed, where X is the matrix of images. The eigenvalue decomposition of Y was performed to obtain the eigenvectors U and eigenvalues Λ. The eigenvectors were sorted based on the magnitude of their corresponding eigenvalues in descending order, and the first six eigenvectors with the largest magnitude eigenvalues were extracted.
 ```
-# Compute the matrix Y as X times its transpose
-Y = np.dot(X.T, X)
+# Create the matrix Y = X * X^T
+Y = np.dot(X, X.T)
 # Compute the eigenvalues and eigenvectors of Y
-eigenvalues, eigenvectors = eigh(Y)
+eigenvalues, eigenvectors = eig(Y)
 # Sort the eigenvalues in descending order
-idx = np.argsort(eigenvalues)[::-1]
-# Select the first six eigenvectors with the largest magnitude eigenvalues
-eigenvectors_largest = eigenvectors[:, idx[:6]]
+sorted_indices = np.argsort(eigenvalues)[::-1]
+eigenvalues_sorted = eigenvalues[sorted_indices]
+eigenvectors_sorted = eigenvectors[:, sorted_indices]
+# Extract the first six eigenvectors with the largest magnitude eigenvalues
+eigenvectors_largest = eigenvectors_sorted[:, :6]
 # Normalize the eigenvectors
 eigenvectors_largest_normalized = eigenvectors_largest / np.linalg.norm(eigenvectors_largest, axis=0)
 ```
 ### Part E
 SVD of Matrix X and Principal Component Directions: Singular Value Decomposition (SVD) was performed on the matrix X to obtain the left singular vectors U, singular values Σ, and right singular vectors V^T. The first six singular vectors (or principal component directions) were obtained.
 ```
-# Perform SVD on X
+# Perform Singular Value Decomposition (SVD) on X
 U, S, Vt = np.linalg.svd(X, full_matrices=False)
-# Extract the first six principal component directions
-principal_component_directions = Vt[:6, :]  # Extract the first six rows of Vt
-# Transpose the principal component directions to have one direction per column
-principal_component_directions = principal_component_directions.T
+# Find the first six principal component directions
+principal_component_directions = U[:, :6]
 ```
 ### Part F
 Comparing Eigenvectors and SVD Modes: The first eigenvector v1 from part (d) was compared with the first singular vector u1 from part (e) to compute the norm of the difference of their absolute values. This comparison provided insights into the similarity between the two approaches in capturing the image features.
@@ -118,31 +118,31 @@ Similar to part (a), a 10x10 correlation matrix was computed between the images 
 The matrix Y = X * X^T was computed, and its eigenvalue decomposition was performed to obtain the eigenvectors U and eigenvalues Λ. The first six eigenvectors with the largest magnitude eigenvalues were extracted and plotted to visualize their directions in the image space.
 #### Result
 ```
-[[-0.01219331  0.01938848 -0.01691206  0.0204079  -0.01902342  0.0090084 ]
- [-0.00215188  0.00195186 -0.00143586 -0.01201431  0.00418948  0.00624237]
- [-0.01056679 -0.02471869 -0.0384465   0.00397553  0.0384026  -0.01580824]
+[[ 0.02384327  0.04535378  0.05653196  0.04441826 -0.03378603  0.02207542]
+ [ 0.02576146  0.04567536  0.04709124  0.05057969 -0.01791442  0.03378819]
+ [ 0.02728448  0.04474528  0.0362807   0.05522219 -0.00462854  0.04487476]
  ...
- [-0.02177117 -0.04027773 -0.01340245 -0.01641295 -0.01092512  0.00977639]
- [-0.03015309 -0.00219562  0.01883373 -0.04011563  0.00087341 -0.00090316]
- [-0.0257889  -0.01553129 -0.00643709  0.02679029  0.01260435 -0.00304479]]
+ [ 0.02082937 -0.03737158  0.06455006 -0.01006919  0.06172201  0.03025485]
+ [ 0.0193902  -0.03557383  0.06196898 -0.00355905  0.05796353  0.02850199]
+ [ 0.0166019  -0.02965746  0.05241684  0.00040934  0.05757412  0.00941028]]
 ```
 ### Part E
 Singular Value Decomposition (SVD) was performed on the matrix X to obtain the left singular vectors U, singular values Σ, and right singular vectors V^T. The first six singular vectors (or principal component directions) were obtained and plotted to visualize their directions in the image space.
 #### Result
 ```
-[[-0.01219331  0.01938848 -0.01691206 -0.0204079   0.01902342  0.0090084 ]
- [-0.00215188  0.00195186 -0.00143586  0.01201431 -0.00418948  0.00624237]
- [-0.01056679 -0.02471869 -0.0384465  -0.00397553 -0.0384026  -0.01580824]
+[[-0.02384327 -0.04535378 -0.05653196  0.04441826 -0.03378603  0.02207542]
+ [-0.02576146 -0.04567536 -0.04709124  0.05057969 -0.01791442  0.03378819]
+ [-0.02728448 -0.04474528 -0.0362807   0.05522219 -0.00462854  0.04487476]
  ...
- [-0.02177117 -0.04027773 -0.01340245  0.01641295  0.01092512  0.00977639]
- [-0.03015309 -0.00219562  0.01883373  0.04011563 -0.00087341 -0.00090316]
- [-0.0257889  -0.01553129 -0.00643709 -0.02679029 -0.01260435 -0.00304479]]
+ [-0.02082937  0.03737158 -0.06455006 -0.01006919  0.06172201  0.03025485]
+ [-0.0193902   0.03557383 -0.06196898 -0.00355905  0.05796353  0.02850199]
+ [-0.0166019   0.02965746 -0.05241684  0.00040934  0.05757412  0.00941028]]
 ```
 ### Part F
 The first eigenvector v1 from the eigenvalue decomposition of Y was compared with the first singular vector u1 from the SVD of X to compute the norm of the difference of their absolute values. The norm was found to be small, indicating a high level of similarity between the two approaches in capturing the image features.
 #### Result
 ```
-Norm of difference between v1 and u1: 1.0688749744602884e-15
+Norm of difference between v1 and u1: 6.762462983478808e-16
 ```
 ### Part G
 The percentage of variance captured by each of the first six singular values (or eigenvalues) was computed, and the results were plotted to visualize the contributions of each mode to the total variance. The plot showed the proportion of total variance explained by each mode, providing insights into the significance of each mode in representing the image data.
