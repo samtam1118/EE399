@@ -4,5 +4,5 @@ This repository includes the assignments and accompanying reports for the course
 
 ## Table of Contents
 
-- [HW1](#HW1)
-- [HW2](#HW2)
+- [HW1](/HW1)
+- [HW2](/HW2)
