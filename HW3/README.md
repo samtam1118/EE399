@@ -48,7 +48,49 @@ Decision Trees are a popular technique in machine learning used for classificati
 In this project, we use these techniques to analyze and classify handwritten digits in the MNIST dataset. SVD is used to decompose the digit images into their underlying structure, while LDA, SVM, and Decision Trees are used to classify the digits based on their features.
 
 ## Algorithm Implementation
+### Singular Value Decomposition (SVD) Analysis
+SVD was used to decompose the digit images into their principal components. The images were first reshaped into column vectors and then stacked together to form a data matrix, where each column represents a different image. SVD was performed on this data matrix, resulting in three matrices: U, Σ, and V.
+```
+# Reshape the images into column vectors
+X_col = X.T
+# Perform the SVD
+U, S, VT = np.linalg.svd(X_col, full_matrices=False)
+```
 
+### Principal Component Analysis (PCA) for Dimensionality Reduction
+PCA was then used to reduce the dimensionality of the data by projecting it onto its principal components. The number of principal components to retain was determined by examining the singular value spectrum obtained from the SVD analysis.
+```
+# Perform PCA to reduce the dimensionality of the data
+n_components = 50
+pca = PCA(n_components=n_components)
+X_train_pca = pca.fit_transform(X_train_std)
+```
+### Linear Discriminant Analysis (LDA) Classifier
+LDA was used to build linear classifiers to identify pairs and triplets of digits in the training set.
+```
+# Perform LDA to learn a linear classifier
+lda = LinearDiscriminantAnalysis()
+lda.fit(X_train_pca, y_train)
+```
+
+### Support Vector Machines (SVM) Classifier
+SVM was also used to build classifiers to identify pairs and triplets of digits in the training set, as well as to separate all ten digits.
+```
+# Train the SVM classifier
+svm = SVC(kernel='linear', C=1)
+svm.fit(X_train, y_train)
+# Test the SVM classifier
+y_pred_svm = svm.predict(X_test)
+```
+### Decision Trees Classifier
+Decision trees were also used to build classifiers to identify pairs and triplets of digits in the training set, as well as to separate all ten digits.
+```
+# Train the decision tree classifier
+dt = DecisionTreeClassifier()
+dt.fit(X_train, y_train)
+# Test the decision tree classifier
+y_pred_dt = dt.predict(X_test)
+```
 ## Computational Results
 
 ## Summary and Conclusions
