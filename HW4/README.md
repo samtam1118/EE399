@@ -54,7 +54,7 @@ optimizer = optim.Adam(net.parameters(), lr=0.01)
 X = torch.Tensor(np.arange(0, 31)).view(-1, 1)
 Y = torch.Tensor(np.array([30, 35, 33, 32, 34, 37, 39, 38, 36, 36, 37, 39, 42, 45, 45, 41, 40, 39, 42, 44, 47, 49, 50, 49, 46, 48, 50, 53, 55, 54, 53])).view(-1, 1)
 ```
-I then trained the network on the training set for 1000 epochs, and recorded the training and test MSE after each epoch. I also saved the weights of the network that had the lowest test MSE.
+Then trained the network on the training set for 1000 epochs, and recorded the training and test MSE after each epoch. I also saved the weights of the network that had the lowest test MSE.
 ```
 # Train the neural network
 for epoch in range(1000):
@@ -125,7 +125,7 @@ class Net(nn.Module):
         x = self.fc3(x)
         return x
 ```
-We used the cross-entropy loss function and the Adam optimizer with a learning rate of 0.001 to train the network on the MNIST training set. We trained the network for 10 epochs and recorded the training and validation accuracy after each epoch.
+I used the cross-entropy loss function and the Adam optimizer with a learning rate of 0.001 to train the network on the MNIST training set. I trained the network for 10 epochs and recorded the training and validation accuracy after each epoch.
 ```
 # Instantiate the network and define the loss function and optimizer
 net = Net()
@@ -161,7 +161,7 @@ with torch.no_grad():
         total += labels.size(0)
         correct += (predicted == labels).sum().item()
 ```
-To compare the performance of the neural network to other machine learning models, we also implemented an LSTM, SVM, and decision tree classifier using the sklearn library. We trained each model on the same set of features (the first 20 PCA modes) and evaluated their performance on the MNIST test set.
+To compare the performance of the neural network to other machine learning models, I also implemented an LSTM, SVM, and decision tree classifier using the sklearn library. I trained each model on the same set of features (the first 20 PCA modes) and evaluated their performance on the MNIST test set.
 ### SVM, and DecisionTree classifier
 ```
 # Train and evaluate a decision tree classifier
@@ -242,7 +242,7 @@ lstm_acc = accuracy_score(test_labels, lstm_preds)
 In this report, I present the computational results of two machine learning tasks: regression using a three-layer feedforward neural network and classification using a feedforward neural network on the MNIST dataset of handwritten digits. I use the PyTorch and sklearn libraries to implement and train the neural networks, and compare their performance to other machine learning models such as SVMs and decision trees.
 
 ### Regression using a three-layer feedforward neural network:
-I first fit the synthetic dataset X=np.arange(0,31) and Y=np.array([30, 35, 33, 32, 34, 37, 39, 38, 36, 36, 37, 39, 42, 45, 45, 41, 40, 39, 42, 44, 47, 49, 50, 49, 46, 48, 50, 53, 55, 54, 53]) to a three-layer feedforward neural network. The neural network consists of an input layer with one neuron, a hidden layer with two neurons, and an output layer with one neuron. I use the ReLU activation function for the hidden layer and no activation function for the output layer. I train the neural network using the mean squared error loss function and the Adam optimizer with a learning rate of 0.01. We train the model for 1000 epochs and plot the predicted output against the true output.
+First fit the synthetic dataset X=np.arange(0,31) and Y=np.array([30, 35, 33, 32, 34, 37, 39, 38, 36, 36, 37, 39, 42, 45, 45, 41, 40, 39, 42, 44, 47, 49, 50, 49, 46, 48, 50, 53, 55, 54, 53]) to a three-layer feedforward neural network. The neural network consists of an input layer with one neuron, a hidden layer with two neurons, and an output layer with one neuron. I use the ReLU activation function for the hidden layer and no activation function for the output layer. I train the neural network using the mean squared error loss function and the Adam optimizer with a learning rate of 0.01. I train the model for 1000 epochs and plot the predicted output against the true output.
 ```
 Epoch [100/1000], Loss: 131.0033
 Epoch [200/1000], Loss: 4.7474
@@ -255,7 +255,7 @@ Epoch [800/1000], Loss: 4.6752
 Epoch [900/1000], Loss: 4.6602
 Epoch [1000/1000], Loss: 4.6452
 ```
-I then use the first 20 data points as training data and compute the least-square error for each model over the training points. I also compute the least square error of these models on the test data, which are the remaining 10 data points. I repeat the process using the first 10 and last 10 data points as training data, and fit the model to the test data (which are the 10 held out middle data points).
+Then use the first 20 data points as training data and compute the least-square error for each model over the training points. I also compute the least square error of these models on the test data, which are the remaining 10 data points. I repeat the process using the first 10 and last 10 data points as training data, and fit the model to the test data (which are the 10 held out middle data points).
 #### first 20 data points
 ```
 Epoch [100/1000], Loss: 5.0299
