@@ -384,7 +384,7 @@ Then build a feedforward neural network with three hidden layers, each with 128 
 [Epoch 10  900] loss: 0.021
 Neural network accuracy on test images: 97 %
 ```
-We compare the performance of the feedforward neural network to other machine learning models such as SVMs, decision trees and LSTM. We use the sklearn library to implement and train these models and evaluate their performance on the test dataset.
+I compare the performance of the feedforward neural network to other machine learning models such as SVMs, decision trees and LSTM. We use the sklearn library to implement and train these models and evaluate their performance on the test dataset.
 #### SVM and decision tree
 ```
 Decision tree accuracy: 84.59 %
