@@ -262,11 +262,13 @@ For ρ = 17:
 ```
 FFNN test loss for rho=17: 0.3170
 LSTM test loss for rho=17: 107.9591
+RNN test loss for rho=17: 61.8937
 ```
 For ρ = 35:
 ```
 FFNN test loss for rho=35: 0.2311
 LSTM test loss for rho=35: 323.1058
+RNN test loss for rho=35: 283.8249
 ```
 Based on the test losses, it can be observed that the FFNN models outperformed the LSTM, RNN and ESN models in terms of prediction accuracy for both ρ = 17 and ρ = 35.
 
