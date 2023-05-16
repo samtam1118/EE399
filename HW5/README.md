@@ -119,23 +119,42 @@ class LorenzRNN(nn.Module):
 ```
 Echo State Network (ESN): An Echo State Network was implemented using PyTorch. The ESN consisted of a reservoir of recurrently connected neurons with randomly assigned weights. The reservoir's output was linearly combined with a readout layer to make predictions. The ESN model was trained using the Adam optimizer and mean squared error loss function.
 ```
-class LorenzESN(nn.Module):
-    def __init__(self, input_size, reservoir_size, output_size):
-        super(LorenzESN, self).__init__()
-        self.input_dim = input_size
-        self.reservoir_dim = reservoir_size
-        self.output_dim = output_size
-        self.Win = nn.Parameter(torch.randn(reservoir_size, input_size) / np.sqrt(input_size), requires_grad=False)
-        self.W = nn.Parameter(torch.randn(reservoir_size, reservoir_size) / np.sqrt(reservoir_size), requires_grad=True)
-        self.Wout = nn.Parameter(torch.zeros(output_size, reservoir_size), requires_grad=True)
+class LorenzRNN:
+    def __init__(self, n_reservoir=100, spectral_radius=0.9, noise=0.01):
+        self.n_reservoir = n_reservoir
+        self.spectral_radius = spectral_radius
+        self.noise = noise
 
-    def forward(self, x):
-        batch_size, sequence_length, _ = x.size()
-        reservoir_state = torch.zeros(batch_size, self.reservoir_dim, device=x.device, dtype=x.dtype)
-        for t in range(sequence_length):
-            reservoir_state = torch.tanh(torch.mm(x[:, t, :], self.Win.T) + torch.mm(reservoir_state, self.W.T))
-        out = torch.mm(reservoir_state, self.Wout.T)
-        return out
+    def fit(self, input_data, output_data):
+        np.random.seed(42)
+        self.W_in = np.random.rand(self.n_reservoir, input_data.shape[1]) - 0.5
+        self.W = np.random.rand(self.n_reservoir, self.n_reservoir) - 0.5
+        self.W *= self.spectral_radius / np.max(np.abs(np.linalg.eigvals(self.W)))
+        self.X = np.zeros((input_data.shape[0], self.n_reservoir))
+        for t in range(1, input_data.shape[0]):
+            self.X[t] = np.tanh(np.dot(input_data[t], self.W_in.T) + np.dot(self.X[t - 1], self.W))
+        self.W_out = np.dot(np.linalg.pinv(self.X), output_data)
+
+    def predict(self, input_data):
+        predictions = np.zeros((input_data.shape[0], self.W_out.shape[1]))
+        x = np.copy(self.X[-1])
+        for t in range(input_data.shape[0]):
+            x = np.tanh(np.dot(input_data[t], self.W_in.T) + np.dot(x, self.W))
+            predictions[t] = np.dot(x, self.W_out)
+        return predictions
+
+class MyESNModel:
+    def __init__(self, n_reservoir=100, spectral_radius=0.9, noise=0.01):
+        self.n_reservoir = n_reservoir
+        self.spectral_radius = spectral_radius
+        self.noise = noise
+
+    def train(self, rho):
+        nn_input, nn_output = generate_training_data(rho)
+        esn = LorenzRNN(n_reservoir=self.n_reservoir, spectral_radius=self.spectral_radius, noise=self.noise)
+        esn.fit(nn_input, nn_output)
+        return esn
+
 ```
 
 #### Model Evaluation
@@ -263,12 +282,14 @@ For ρ = 17:
 FFNN test loss for rho=17: 0.3170
 LSTM test loss for rho=17: 107.9591
 RNN test loss for rho=17: 61.8937
+ESN test loss for rho=17: 0.2574
 ```
 For ρ = 35:
 ```
 FFNN test loss for rho=35: 0.2311
 LSTM test loss for rho=35: 323.1058
 RNN test loss for rho=35: 283.8249
+ESN test loss for rho=35: 2.5307
 ```
 Based on the test losses, it can be observed that the FFNN models outperformed the LSTM, RNN and ESN models in terms of prediction accuracy for both ρ = 17 and ρ = 35.
 
