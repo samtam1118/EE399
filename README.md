@@ -4,8 +4,8 @@ This repository includes the assignments and accompanying reports for the course
 
 ## Table of Contents
 
-- [HW1](/HW1)
-- [HW2](/HW2)
-- [HW3](/HW3)
-- [HW4](/HW4)
-- [HW5](/HW5)
+- [HW1: Least-Squares Fitting Error](/HW1)
+- [HW2: Image Correlation, Eigenvectors, and Principal Component Analysis](/HW2)
+- [HW3; Analysis and Classification of Handwritten Digits Using SVD, Linear Discriminant Analysis, SVM, and Decision Trees](/HW3)
+- [HW4: Neural Networks and Machine Learning Models](/HW4)
+- [HW5: Comparing Neural Network Architectures for Lorenz System Forecasting](/HW5)
