@@ -9,3 +9,4 @@ This repository includes the assignments and accompanying reports for the course
 - [HW3; Analysis and Classification of Handwritten Digits Using SVD, Linear Discriminant Analysis, SVM, and Decision Trees](/HW3)
 - [HW4: Neural Networks and Machine Learning Models](/HW4)
 - [HW5: Comparing Neural Network Architectures for Lorenz System Forecasting](/HW5)
+- [HW6: Spatiotemporal Analysis and Forecasting of Sea-Surface Temperature Using LSTM/Decoder Model](/HW6)
